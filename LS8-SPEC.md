@@ -148,6 +148,7 @@ Glossary:
 Add two registers and store the result in registerA.
 
 Machine code:
+Add numA numB
 ```
 10101000 00000aaa 00000bbb
 ```
