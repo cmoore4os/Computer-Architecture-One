@@ -127,7 +127,6 @@ value to store.
 
 See the LS-8 spec for the details of what this instructions does.
 
-
 ### Step 6: Add the `PRN` instruction
 
 This is a very similar process to adding `LDI`, but the handler is simpler. See
@@ -168,10 +167,9 @@ Should produce
 
 through the process of executing the machine code in the input file.
 
-
 ## Day 2
 
-###  Implement System Stack
+### Implement System Stack
 
 All CPUs manage a _stack_ that can be used to store information
 temporarily. This stack resides in main memory and typically starts at

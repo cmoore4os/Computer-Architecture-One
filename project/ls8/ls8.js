@@ -92,6 +92,6 @@ if (argv.length === 0) {
   // Read from file
   loadFile(argv[0], cpu, onFileLoaded);
 } else {
-  console.error('usage: ls8 [machinecodefile]');
+  console.error('usage: ls8 [machineCodeFile]');
   process.exit(1);
 }
