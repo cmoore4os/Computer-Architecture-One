@@ -19,7 +19,7 @@ function processFile(content, cpu, onComplete) {
     // !!! IMPLEMENT ME
 
     // Strip comments
-    if (line.index('#') !== 1) {
+    if (line.indexOf('#') !== -1) {
       line = line.substring(0, line.indexOf('#'));
     }
 

@@ -5,16 +5,20 @@
 const fs = require('fs');
 
 // Instructions
-
+const ADD = 0b10101000; // adds regA and regB
+const AND = 0b10110011; // bitwise& regA and regB
+const DEC = 0b01111001; // decreases a register by 1
+const DIV = 0b10101011; // divides regA by regB; return error if regB === 0
 const HLT = 0b00000001; // Halt CPU
-// !!! IMPLEMENT ME
-const ADD = 10101000;
-const AND = 10110011;
-const DIV = 10101011;
-const LDI = 10011001;
-const MUL = 10101010;
-const PRN = 01000011;
-const SUB = 10101001;
+const INC = 0b01111000; // increases a register by 1
+
+const LDI = 0b10011001; // LDI R,I(mmediate)
+
+const MUL = 0b10101010; // multiply regA by regB
+
+const PRN = 0b01000011; // prints numeric value in regA to the console
+
+const SUB = 0b10101001; // subtracts regB from regA
 
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -42,14 +46,14 @@ class CPU {
   setupBranchTable() {
     let bt = {};
 
-    // !!! IMPLEMENT ME
-    bt[HLT] = this.HLT;
     bt[ADD] = this.ADD;
     bt[AND] = this.AND;
+    bt[DEC] = this.DEC;
     bt[DIV] = this.DIV;
+    bt[HLT] = this.HLT;
+    bt[INC] = this.INC;
     bt[LDI] = this.LDI;
     bt[MUL] = this.MUL;
-    bt[NOP] = this.NOP;
     bt[PRN] = this.PRN;
     bt[SUB] = this.SUB;
 
@@ -91,29 +95,29 @@ class CPU {
       case 'ADD':
         return (this.reg[regA] = this.reg[regA] + this.reg[regB]);
         break;
+
       case 'SUB':
         return (this.reg[regA] = this.reg[regA] - this.reg[regB]);
         break;
+
       case 'MUL':
         return (this.reg[regA] = this.reg[regA] * this.reg[regB]);
         break;
+
       case 'DIV':
         if (regB === 0) {
           return 'Error: Can not divide by 0';
-          return (this.reg[regA] = this.reg[regA] / this.reg[regB]);
         }
-        return (this.reg[regA] = this.reg[regA] + this.reg[regB]);
+        return (this.reg[regA] = this.reg[regA] / this.reg[regB]);
         break;
+
       case 'INC':
         return (this.reg[regA] = this.reg[regA] + 1);
         break;
+
       case 'DEC':
         return (this.reg[regA] = this.reg[regA] - 1);
         break;
-      // case 'CMP':
-      //   let flag;
-      // return regA  regB;
-      //   break;
     }
   }
 
@@ -131,7 +135,7 @@ class CPU {
     // Based on the value in the Instruction Register, locate the
     // appropriate hander in the branchTable
     // !!! IMPLEMENT ME
-    let handler = this.branchTable(this.reg.IR);
+    let handler = this.branchTable[this.reg.IR];
 
     // Check that the handler is defined, halt if not (invalid
     // instruction)
@@ -212,7 +216,7 @@ class CPU {
    * PRN R
    */
   PRN(regA) {
-    console.log(parseInt(this.reg[(regA, 10)]));
+    console.log(parseInt(this.reg[regA]));
   }
 
   SUB(regA, regB) {
